@@ -34,8 +34,15 @@
         {{/pk}}
         {{#values}}
             <td>
-                {{^mtm}}{{.}}{{/mtm}}
-                {{#mtm}}<span class="label label-default">{{.}}</span>{{/mtm}}
+				{{^mtm}}
+					{{#lambda}}
+						{{value}}
+					{{/lambda}}
+					{{^lambda}}
+						{{.}}
+					{{/lambda}}
+				{{/mtm}}
+				{{#mtm}}<span class="label label-default">{{.}}</span>{{/mtm}}
             </td>
         {{/values}}
         </tr>
