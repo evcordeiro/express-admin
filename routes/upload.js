@@ -20,7 +20,7 @@ function getName (target, cb) {
     }
 }
 
-function processFile (file, dpath, cb) {
+function processFile (req, res, file, dpath, cb) {
     if (!file.name) return cb(null, file.name);
     // file.name; // file-name.jpg
     // file.path; // /tmp/9c9b10b72fe71be752bd3895f1185bc8
@@ -63,13 +63,17 @@ function getFiles (req) {
 }
 
 exports.files = function (req, res, next) {
+    
     var files = getFiles(req),
-        dpath = res.locals._admin.config.app.upload;
-
+        
+        dpath = res.locals._admin.config.app.upload,
+        //check config for custom upload handler
+        processFileHandler = res.locals._admin.config.app.upload_handler ? require(res.locals._admin.config.app.upload_handler).processFile : processFile;
+        
     (function loop (index) {
         if (index == files.length) return next();
         var file = files[index];
-        processFile(file, dpath, function (err, fname) {
+        processFileHandler(req, res, file, dpath, function (err, fname) {
             if (fname != '') setName(req, file, fname);
             loop(++index);
         });

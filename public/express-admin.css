@@ -129,3 +129,9 @@ footer p { margin-bottom: 0; }
     background-color: #ddd;
     -webkit-border-radius: 8px;
 }
+
+
+img.listview_showasimage {
+	height:50px;
+
+}
